@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — Bhavani Matrimony</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="dot"></span>Bhavani Matrimony</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="nav-auth-slot"><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="auth-wrap" style="align-items:flex-start;">
+  <div class="auth-card" style="max-width:640px;">
+    <h2>Create your free profile</h2>
+    <p class="sub">Takes less than 5 minutes. Your details stay private until you choose to share them.</p>
+
+    <div id="form-msg" class="form-msg"></div>
+
+    <form id="register-form">
+      <div class="field-grid">
+        <div class="field">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="field">
+          <label for="gender">Registering For</label>
+          <select id="gender" required>
+            <option value="">Select</option>
+            <option value="male">Groom (Male)</option>
+            <option value="female">Bride (Female)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" required>
+        </div>
+        <div class="field">
+          <label for="marital">Marital Status</label>
+          <select id="marital" required>
+            <option value="">Select</option>
+            <option value="unmarried">Unmarried</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widow/Widower</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="religion">Religion</label>
+          <select id="religion" required>
+            <option value="">Select</option>
+            <option>Hindu</option>
+            <option>Christian</option>
+            <option>Muslim</option>
+            <option>Jain</option>
+            <option>Sikh</option>
+            <option>No Religion</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="caste">Caste / Community</label>
+          <select id="caste" required>
+            <option value="">Select</option>
+            <option>Brahmin</option>
+            <option>Reddy</option>
+            <option>Kamma</option>
+            <option>Kapu</option>
+            <option>Naidu</option>
+            <option>Yadav</option>
+            <option>Vysya</option>
+            <option>Kshatriya</option>
+            <option>Setty Balija</option>
+            <option>Velama</option>
+            <option>Vaddera</option>
+            <option>Mudiraj</option>
+            <option>Cast No Bar</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <input type="text" id="city" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" minlength="6" required>
+        </div>
+      </div>
+      <div class="field" style="margin-top:18px;">
+        <label for="bio">About You (optional)</label>
+        <textarea id="bio" placeholder="A short note about yourself, your family, and what you're looking for."></textarea>
+      </div>
+      <div class="field" style="margin-top:18px;">
+        <label for="photo">Photo URL (optional)</label>
+        <input type="url" id="photo" placeholder="https://...">
+      </div>
+      <button type="submit" id="register-btn" class="btn btn-solid btn-block" style="margin-top:24px;">Create My Profile</button>
+    </form>
+
+    <div class="auth-switch">Already registered? <a href="login.html">Login here</a></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const form = document.getElementById('register-form');
+  const msg = document.getElementById('form-msg');
+  const btn = document.getElementById('register-btn');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Creating your profile...';
+
+    // Demo mode — no backend connected yet, this just simulates success.
+    setTimeout(() => {
+      showMsg(msg, "Demo mode: this is where your profile would be created. Backend not connected yet.", 'success');
+      btn.disabled = false;
+      btn.textContent = 'Create My Profile';
+    }, 800);
+  });
+</script>
+</body>
+</html>

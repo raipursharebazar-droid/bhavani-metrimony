@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Profiles — Bhavani Matrimony</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="dot"></span>Bhavani Matrimony</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="search.html" class="active">Search</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="nav-auth-slot"><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-head" style="padding-bottom:0;">
+  <div class="wrap">
+    <span class="eyebrow">Search</span>
+    <h1>Find your match</h1>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="search-card" style="margin-top:0;">
+      <form id="filter-form">
+        <div class="search-grid">
+          <div class="field">
+            <label for="f-gender">Looking For</label>
+            <select id="f-gender">
+              <option value="">Any</option>
+              <option value="male">Groom</option>
+              <option value="female">Bride</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-age-min">Age From</label>
+            <input type="number" id="f-age-min" min="18" max="90">
+          </div>
+          <div class="field">
+            <label for="f-age-max">Age To</label>
+            <input type="number" id="f-age-max" min="18" max="90">
+          </div>
+          <div class="field">
+            <label for="f-marital">Marital Status</label>
+            <select id="f-marital">
+              <option value="">Any</option>
+              <option value="unmarried">Unmarried</option>
+              <option value="divorced">Divorced</option>
+              <option value="widowed">Widow/Widower</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-religion">Religion</label>
+            <select id="f-religion">
+              <option value="">Any</option>
+              <option>Hindu</option>
+              <option>Christian</option>
+              <option>Muslim</option>
+              <option>Jain</option>
+              <option>Sikh</option>
+              <option>No Religion</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-caste">Caste / Community</label>
+            <select id="f-caste">
+              <option value="">Any</option>
+              <option>Brahmin</option>
+              <option>Reddy</option>
+              <option>Kamma</option>
+              <option>Kapu</option>
+              <option>Naidu</option>
+              <option>Yadav</option>
+              <option>Vysya</option>
+              <option>Kshatriya</option>
+              <option>Setty Balija</option>
+              <option>Velama</option>
+              <option>Vaddera</option>
+              <option>Mudiraj</option>
+              <option>Cast No Bar</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-solid" style="margin-top:20px;">Apply Filters</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div id="results-count" style="margin-bottom:20px; color:var(--text-dim); font-size:14px;"></div>
+    <div id="results" class="profile-grid">
+      <div class="loader">Loading profiles...</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <h3>Bhavani Matrimony</h3>
+      <div class="footer-links">
+        <div>
+          <span>Pages</span>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+          <a href="register.html">Register</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Bhavani Matrimony. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  document.getElementById('f-gender').value = params.get('gender') || '';
+  document.getElementById('f-age-min').value = params.get('ageMin') || '';
+  document.getElementById('f-age-max').value = params.get('ageMax') || '';
+  document.getElementById('f-marital').value = params.get('marital') || '';
+  document.getElementById('f-religion').value = params.get('religion') || '';
+  document.getElementById('f-caste').value = params.get('caste') || '';
+
+  function runSearch() {
+    const resultsEl = document.getElementById('results');
+    const countEl = document.getElementById('results-count');
+
+    const gender = document.getElementById('f-gender').value;
+    const marital = document.getElementById('f-marital').value;
+    const religion = document.getElementById('f-religion').value;
+    const caste = document.getElementById('f-caste').value;
+    const ageMin = parseInt(document.getElementById('f-age-min').value) || null;
+    const ageMax = parseInt(document.getElementById('f-age-max').value) || null;
+
+    let profiles = SAMPLE_PROFILES.slice();
+    if (gender) profiles = profiles.filter(p => p.gender === gender);
+    if (marital) profiles = profiles.filter(p => p.marital === marital);
+    if (religion) profiles = profiles.filter(p => p.religion === religion);
+    if (caste) profiles = profiles.filter(p => p.caste === caste);
+    if (ageMin) profiles = profiles.filter(p => p.age >= ageMin);
+    if (ageMax) profiles = profiles.filter(p => p.age <= ageMax);
+
+    countEl.textContent = profiles.length + ' profile' + (profiles.length === 1 ? '' : 's') + ' found';
+
+    if (profiles.length === 0) {
+      resultsEl.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><h4>No matches found</h4><p>Try widening your search filters.</p></div>';
+      return;
+    }
+
+    resultsEl.innerHTML = profiles.map(p => `
+      <div class="profile-card">
+        <div class="profile-photo">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : (p.name ? p.name.charAt(0) : '?')}</div>
+        <div class="profile-body">
+          <h4>${p.name || 'Member'}</h4>
+          <div class="profile-meta">${p.age || '—'} yrs · ${p.city || '—'}</div>
+          <div class="profile-tags">
+            ${p.religion ? `<span class="tag">${p.religion}</span>` : ''}
+            ${p.caste ? `<span class="tag">${p.caste}</span>` : ''}
+            ${p.marital ? `<span class="tag">${p.marital}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('filter-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    runSearch();
+  });
+
+  runSearch();
+</script>
+</body>
+</html>

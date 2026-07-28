@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhavani Matrimony — Find Your Perfect Match</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="dot"></span>Bhavani Matrimony</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="nav-auth-slot"><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Trusted since 1999</span>
+    <h1>Find a life partner who <span>truly matches</span> your values.</h1>
+    <p>Bhavani Matrimony has helped thousands of families find the right match — maintained by women, built on trust, and free to register.</p>
+
+    <div class="search-card">
+      <h3>Quick Search</h3>
+      <form id="quick-search-form">
+        <div class="search-grid">
+          <div class="field">
+            <label for="qs-gender">Looking For</label>
+            <select id="qs-gender">
+              <option value="">Any</option>
+              <option value="male">Groom</option>
+              <option value="female">Bride</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="qs-age-min">Age From</label>
+            <input type="number" id="qs-age-min" placeholder="18" min="18" max="90">
+          </div>
+          <div class="field">
+            <label for="qs-age-max">Age To</label>
+            <input type="number" id="qs-age-max" placeholder="45" min="18" max="90">
+          </div>
+          <div class="field">
+            <label for="qs-marital">Marital Status</label>
+            <select id="qs-marital">
+              <option value="">Any</option>
+              <option value="unmarried">Unmarried</option>
+              <option value="divorced">Divorced</option>
+              <option value="widowed">Widow/Widower</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-solid" style="margin-top:20px;">Search Profiles</button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="n">25+</div><div class="l">Years of service</div></div>
+      <div class="stat"><div class="n">10,000+</div><div class="l">Registered profiles</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Women-run team</div></div>
+      <div class="stat"><div class="n">Free</div><div class="l">Registration</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--white);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" style="text-align:left;">Why us</span>
+      <h2>A matrimony platform built on trust.</h2>
+      <p>Every profile is reviewed, every search is private, and every step of the process is handled with care.</p>
+    </div>
+    <div class="profile-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="profile-card">
+        <div class="profile-body">
+          <h4>Verified Profiles</h4>
+          <p class="profile-meta">Every registration is checked manually before it goes live, so you're only browsing genuine profiles.</p>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-body">
+          <h4>Community Matching</h4>
+          <p class="profile-meta">Search by caste, religion, and community — find matches that align with your family's preferences.</p>
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-body">
+          <h4>Women-Led Support</h4>
+          <p class="profile-meta">Our team is entirely run by women, dedicated full-time to helping you through the process.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="text-align:center;">
+    <h2 style="font-family:var(--serif); font-size:28px; color:var(--maroon-dark); margin-bottom:16px;">Ready to find your match?</h2>
+    <p style="color:var(--text-dim); margin-bottom:28px;">Registration is completely free and takes less than 5 minutes.</p>
+    <a href="register.html" class="btn btn-solid">Register Now</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <h3>Bhavani Matrimony</h3>
+      <div class="footer-links">
+        <div>
+          <span>Pages</span>
+          <a href="search.html">Search</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+          <a href="register.html">Register</a>
+        </div>
+        <div>
+          <span>Contact</span>
+          <a href="tel:+919704656103">+91 97046 56103</a>
+          <a href="mailto:info@bhavanimatrimony.com">info@bhavanimatrimony.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Bhavani Matrimony. All rights reserved.</span>
+      <span>Maintained by women, for families.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  document.getElementById('quick-search-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const gender = document.getElementById('qs-gender').value;
+    const ageMin = document.getElementById('qs-age-min').value;
+    const ageMax = document.getElementById('qs-age-max').value;
+    const marital = document.getElementById('qs-marital').value;
+    const params = new URLSearchParams();
+    if (gender) params.set('gender', gender);
+    if (ageMin) params.set('ageMin', ageMin);
+    if (ageMax) params.set('ageMax', ageMax);
+    if (marital) params.set('marital', marital);
+    window.location.href = 'search.html?' + params.toString();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile — Bhavani Matrimony</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="dot"></span>Bhavani Matrimony</a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li id="nav-auth-slot"><a href="login.html">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-head" style="padding-bottom:30px;">
+  <div class="wrap">
+    <span class="eyebrow">Dashboard</span>
+    <h1>My Profile</h1>
+  </div>
+</header>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div id="dashboard-content" class="loader">Loading your profile...</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© 2026 Bhavani Matrimony. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  const contentEl = document.getElementById('dashboard-content');
+
+  // Demo mode — showing a sample profile since no backend is connected yet.
+  const p = {
+    name: "Demo User",
+    age: 27,
+    city: "Raipur",
+    email: "demo@example.com",
+    marital: "unmarried",
+    religion: "Hindu",
+    bio: "This is placeholder profile data shown in demo mode. Once a backend is connected, this will show your real saved profile.",
+    photo: ""
+  };
+
+  contentEl.innerHTML = `
+    <div class="dash-grid">
+      <div class="dash-side">
+        <div class="avatar">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : (p.name ? p.name.charAt(0) : '?')}</div>
+        <h4>${p.name || 'Member'}</h4>
+        <p>${p.age || '—'} yrs · ${p.city || '—'}</p>
+        <p style="margin-top:10px;">${p.email}</p>
+      </div>
+      <div class="dash-main">
+        <h3>Edit your details</h3>
+        <div id="form-msg" class="form-msg"></div>
+        <form id="edit-form">
+          <div class="field-grid">
+            <div class="field"><label>Full Name</label><input type="text" id="e-name" value="${p.name || ''}" required></div>
+            <div class="field"><label>City</label><input type="text" id="e-city" value="${p.city || ''}" required></div>
+            <div class="field"><label>Phone</label><input type="tel" id="e-phone" value=""></div>
+            <div class="field"><label>Photo URL</label><input type="url" id="e-photo" value="${p.photo || ''}"></div>
+            <div class="field">
+              <label>Marital Status</label>
+              <select id="e-marital">
+                <option value="unmarried" ${p.marital==='unmarried'?'selected':''}>Unmarried</option>
+                <option value="divorced" ${p.marital==='divorced'?'selected':''}>Divorced</option>
+                <option value="widowed" ${p.marital==='widowed'?'selected':''}>Widow/Widower</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Religion</label>
+              <select id="e-religion">
+                ${['Hindu','Christian','Muslim','Jain','Sikh','No Religion'].map(r => `<option ${p.religion===r?'selected':''}>${r}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="field" style="margin-top:18px;">
+            <label>About You</label>
+            <textarea id="e-bio">${p.bio || ''}</textarea>
+          </div>
+          <button type="submit" id="save-btn" class="btn btn-solid" style="margin-top:20px;">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('edit-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('save-btn');
+    const msg = document.getElementById('form-msg');
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+    setTimeout(() => {
+      showMsg(msg, 'Demo mode: changes are not actually saved yet (no backend connected).', 'success');
+      btn.disabled = false;
+      btn.textContent = 'Save Changes';
+    }, 600);
+  });
+</script>
+</body>
+</html>
