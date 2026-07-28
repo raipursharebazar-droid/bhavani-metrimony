@@ -107,6 +107,22 @@
   </div>
 </section>
 
+<div id="profile-modal" class="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div id="modal-photo" class="modal-photo"></div>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3 id="modal-name"></h3>
+      <div class="modal-meta" id="modal-meta"></div>
+      <div class="profile-tags" id="modal-tags"></div>
+      <div class="modal-bio" id="modal-bio"></div>
+      <button class="btn btn-solid" id="modal-interest">Send Interest</button>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <div class="footer-top">
@@ -162,8 +178,8 @@
       return;
     }
 
-    resultsEl.innerHTML = profiles.map(p => `
-      <div class="profile-card">
+    resultsEl.innerHTML = profiles.map((p, i) => `
+      <div class="profile-card" data-index="${i}" style="cursor:pointer;">
         <div class="profile-photo">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : (p.name ? p.name.charAt(0) : '?')}</div>
         <div class="profile-body">
           <h4>${p.name || 'Member'}</h4>
@@ -176,7 +192,32 @@
         </div>
       </div>
     `).join('');
+
+    // Wire up click-to-open on each card
+    resultsEl.querySelectorAll('.profile-card').forEach(card => {
+      card.addEventListener('click', () => openProfileModal(profiles[parseInt(card.dataset.index)]));
+    });
   }
+
+  // ---- Profile detail modal ----
+  const modal = document.getElementById('profile-modal');
+  function openProfileModal(p) {
+    document.getElementById('modal-photo').innerHTML = p.photo ? `<img src="${p.photo}" alt="${p.name}">` : (p.name ? p.name.charAt(0) : '?');
+    document.getElementById('modal-name').textContent = p.name || 'Member';
+    document.getElementById('modal-meta').textContent = `${p.age || '—'} yrs · ${p.city || '—'}`;
+    document.getElementById('modal-tags').innerHTML = `
+      ${p.religion ? `<span class="tag">${p.religion}</span>` : ''}
+      ${p.caste ? `<span class="tag">${p.caste}</span>` : ''}
+      ${p.marital ? `<span class="tag">${p.marital}</span>` : ''}
+    `;
+    document.getElementById('modal-bio').textContent = p.bio || 'No additional details provided.';
+    modal.classList.add('open');
+  }
+  document.getElementById('modal-close').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+  document.getElementById('modal-interest').addEventListener('click', () => {
+    alert('Demo mode: this would send an interest notification once a backend is connected.');
+  });
 
   document.getElementById('filter-form').addEventListener('submit', (e) => {
     e.preventDefault();
