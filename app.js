@@ -25,7 +25,20 @@ function calcAge(dobStr) {
   return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
 }
 
-// ---- SAMPLE DATA (frontend-only demo mode, no backend yet) ----
+// Scroll reveal (progressive enhancement — visible by default, JS adds
+// the "pre" hidden state right before animating in, so nothing ever
+// stays invisible if JS fails)
+const revealEls = document.querySelectorAll('.reveal');
+revealEls.forEach(el => el.classList.add('pre'));
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
 const SAMPLE_PROFILES = [
   { name: "Anjali Reddy", gender: "female", age: 26, city: "Hyderabad", religion: "Hindu", caste: "Reddy", marital: "unmarried" },
   { name: "Karthik Naidu", gender: "male", age: 29, city: "Vijayawada", religion: "Hindu", caste: "Naidu", marital: "unmarried" },
